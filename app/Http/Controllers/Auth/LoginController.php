@@ -109,4 +109,31 @@ class LoginController extends Controller
 //    }
 //    return redirect()->to('/home');
   }
+
+
+  /**
+   * Return a callback method from facebook api.
+   *
+   * @return callback URL from facebook
+   */
+  public function handleFBProvidercallback() {
+    try {
+      $user = Socialite::driver('facebook')->user();
+      $create[ 'name' ] = $user->getName();
+      $create[ 'email' ] = $user->getEmail();
+      $create[ 'facebook_id' ] = $user->getId();
+
+
+      $userModel = new User;
+      $createdUser = $userModel->addNew($create);
+      Auth::loginUsingId($createdUser->id);
+
+
+      return redirect()->route('home');
+    } catch(Exception $e) {
+      return $this->redirect('login/facebook');
+    }
+
+  }
+
 }

@@ -36,4 +36,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+  public function addNew($input)
+  {
+    $check = static::where('facebook_id',$input['facebook_id'])->first();
+
+
+    if(is_null($check)){
+      return static::create($input);
+    }
+
+
+    return $check;
+  }
 }
