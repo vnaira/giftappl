@@ -26,3 +26,8 @@ Route::get('login/facebook/callback', 'Auth\LoginController@handleFBProvidercall
 Route::get('login/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('login/google/callback', 'Auth\LoginController@handleGoogleProviderCallback');
 
+//Route::post('/giftlist', 'GiftListsController@store')->name('giftlist');
+
+Route::resource('giftlist','GiftListController');
+Route::resource('gift','GiftController');
+
